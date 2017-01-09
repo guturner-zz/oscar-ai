@@ -3,7 +3,7 @@ package com.guy.home.ai.model;
 public class AIResponseObject {
 	private String speech;
 	private String displayText;
-	private String source;
+	private String source = "oscar-ai";
 
 	public String getSpeech() {
 		return speech;
@@ -23,9 +23,5 @@ public class AIResponseObject {
 
 	public String getSource() {
 		return source;
-	}
-
-	public void setSource(String source) {
-		this.source = source;
 	}
 }
