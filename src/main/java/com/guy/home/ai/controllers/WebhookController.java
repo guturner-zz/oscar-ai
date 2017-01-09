@@ -22,8 +22,18 @@ public class WebhookController {
 		respObj.setDisplayText("def");
 		respObj.setSource("oscar-ai");
 		
-		for (Object v : request.values()) {
-			System.out.println(v);
+		String intentName = request.get("intentName").toString();
+		if (intentName != null) {
+			switch (intentName) {
+			case "inquire.smartdevice":
+				String device = ((Map)request.get("parameters")).get("device").toString();
+				switch (device) {
+				case "alexa":
+					respObj.setSpeech("Alexa is Amazon's smart home device.");
+					break;
+				}
+				break;
+			}
 		}
 		
 		return respObj;
