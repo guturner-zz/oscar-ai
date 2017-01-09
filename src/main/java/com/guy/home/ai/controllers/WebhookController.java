@@ -24,24 +24,21 @@ public class WebhookController {
 		respObj.setSource("oscar-ai");
 	
 		Map result = ((Map)request.get("result"));
+		Map metaData = ((Map)result.get("metadata"));
 		
-		for (Entry e : request.entrySet()) {
-			System.out.println(e.getKey() + " : " + e.getValue());
+		String intentName = metaData.get("intentName").toString();
+		if (intentName != null) {
+			switch (intentName) {
+			case "inquire.smartdevice":
+				String device = ((Map)result.get("parameters")).get("device").toString();
+				switch (device) {
+				case "alexa":
+					respObj.setSpeech("Alexa is Amazon's smart home device.");
+					break;
+				}
+				break;
+			}
 		}
-		
-//		String intentName = result.get("intentName").toString();
-//		if (intentName != null) {
-//			switch (intentName) {
-//			case "inquire.smartdevice":
-//				String device = ((Map)result.get("parameters")).get("device").toString();
-//				switch (device) {
-//				case "alexa":
-//					respObj.setSpeech("Alexa is Amazon's smart home device.");
-//					break;
-//				}
-//				break;
-//			}
-//		}
 		
 		return respObj;
 	}
