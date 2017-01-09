@@ -32,7 +32,7 @@ public class WebhookController {
 			case "inquire.smartdevice":
 				String device = ((Map)result.get("parameters")).get("device").toString();
 				switch (device) {
-				case "alexa":
+				case "Alexa":
 					respObj.setSpeech("Alexa is Amazon's smart home device.");
 					break;
 				}
