@@ -1,6 +1,7 @@
 package com.guy.home.ai.controllers;
 
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -22,19 +23,23 @@ public class WebhookController {
 		respObj.setDisplayText("def");
 		respObj.setSource("oscar-ai");
 		
-		String intentName = request.get("intentName").toString();
-		if (intentName != null) {
-			switch (intentName) {
-			case "inquire.smartdevice":
-				String device = ((Map)request.get("parameters")).get("device").toString();
-				switch (device) {
-				case "alexa":
-					respObj.setSpeech("Alexa is Amazon's smart home device.");
-					break;
-				}
-				break;
-			}
+		for (Entry e : request.entrySet()) {
+			System.out.println(e.getKey() + " : " + e.getValue());
 		}
+		
+//		String intentName = request.get("intentName").toString();
+//		if (intentName != null) {
+//			switch (intentName) {
+//			case "inquire.smartdevice":
+//				String device = ((Map)request.get("parameters")).get("device").toString();
+//				switch (device) {
+//				case "alexa":
+//					respObj.setSpeech("Alexa is Amazon's smart home device.");
+//					break;
+//				}
+//				break;
+//			}
+//		}
 		
 		return respObj;
 	}
