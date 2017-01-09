@@ -25,19 +25,23 @@ public class WebhookController {
 	
 		Map result = ((Map)request.get("result"));
 		
-		String intentName = result.get("intentName").toString();
-		if (intentName != null) {
-			switch (intentName) {
-			case "inquire.smartdevice":
-				String device = ((Map)result.get("parameters")).get("device").toString();
-				switch (device) {
-				case "alexa":
-					respObj.setSpeech("Alexa is Amazon's smart home device.");
-					break;
-				}
-				break;
-			}
+		for (Entry e : request.entrySet()) {
+			System.out.println(e.getKey() + " : " + e.getValue());
 		}
+		
+//		String intentName = result.get("intentName").toString();
+//		if (intentName != null) {
+//			switch (intentName) {
+//			case "inquire.smartdevice":
+//				String device = ((Map)result.get("parameters")).get("device").toString();
+//				switch (device) {
+//				case "alexa":
+//					respObj.setSpeech("Alexa is Amazon's smart home device.");
+//					break;
+//				}
+//				break;
+//			}
+//		}
 		
 		return respObj;
 	}
