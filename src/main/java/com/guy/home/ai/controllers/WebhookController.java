@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.guy.home.ai.constants.DeviceConstants;
 import com.guy.home.ai.constants.IntentConstants;
+import com.guy.home.ai.model.AIGenericRequest;
 import com.guy.home.ai.model.AIRequestObject;
 import com.guy.home.ai.model.AIResponseObject;
 import com.guy.home.ai.model.Metadata;
@@ -20,17 +21,18 @@ public class WebhookController {
 	private static final String DEFAULT_SPEECH = "Hmm, I don't know what you mean.";
 
 	@RequestMapping(value = "/webhook", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
-	public AIResponseObject webhook(@RequestBody AIRequestObject request, HttpServletResponse response) {
+	public AIResponseObject webhook(@RequestBody AIGenericRequest request, HttpServletResponse response) {
 		AIResponseObject respObj = new AIResponseObject();
 		respObj.setSpeech(DEFAULT_SPEECH);
 	
-		Metadata metadata = request.getMetadata();
+		AIRequestObject reqObj = request.getResult();
+		Metadata metadata = reqObj.getMetadata();
 		String intentName = metadata.getIntentName();
 		
 		if (intentName != null) {
 			switch (intentName) {
 			case IntentConstants.INQUIRE_SMARTDEVICE:
-				respObj.setSpeech(getInquireSmartDeviceResponse(request));
+				respObj.setSpeech(getInquireSmartDeviceResponse(reqObj));
 				break;
 			}
 		}
