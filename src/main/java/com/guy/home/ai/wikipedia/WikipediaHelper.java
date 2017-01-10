@@ -41,8 +41,8 @@ public class WikipediaHelper {
 	public List<String> generateFactsList(String articleIntro, String subject) {
 		List<String> facts = new ArrayList<String>();
 		
-		String deviceUpper = DeviceConstants.valueOf(subject.toUpperCase()).getName();
-		String deviceLower = deviceUpper.toLowerCase();
+		String deviceUpper = DeviceConstants.valueOf(subject.toUpperCase()).getName() + " ";
+		String deviceLower = deviceUpper.toLowerCase() + " ";
 		
 		for (String fact : articleIntro.split("\\. ")) {
 			facts.add(fact.replaceAll("(</*p>|</*b>)", "").replaceAll("It('s)* ", deviceUpper).replaceAll("it('s)* ", deviceLower));
