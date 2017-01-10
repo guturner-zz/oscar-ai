@@ -1,4 +1,4 @@
-package com.guy.home.ai.model;
+package com.guy.home.ai.model.apiai;
 
 import java.util.Map;
 

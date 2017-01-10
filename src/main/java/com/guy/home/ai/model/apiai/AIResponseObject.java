@@ -1,4 +1,4 @@
-package com.guy.home.ai.model;
+package com.guy.home.ai.model.apiai;
 
 public class AIResponseObject {
 	private String speech;

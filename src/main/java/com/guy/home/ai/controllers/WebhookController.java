@@ -1,7 +1,11 @@
 package com.guy.home.ai.controllers;
 
+import java.util.List;
+import java.util.Random;
+
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,16 +14,22 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.guy.home.ai.constants.DeviceConstants;
 import com.guy.home.ai.constants.IntentConstants;
-import com.guy.home.ai.model.AIGenericRequest;
-import com.guy.home.ai.model.AIRequestObject;
-import com.guy.home.ai.model.AIResponseObject;
-import com.guy.home.ai.model.Metadata;
+import com.guy.home.ai.model.apiai.AIGenericRequest;
+import com.guy.home.ai.model.apiai.AIRequestObject;
+import com.guy.home.ai.model.apiai.AIResponseObject;
+import com.guy.home.ai.model.apiai.Metadata;
+import com.guy.home.ai.wikipedia.WikipediaHelper;
 
 @RestController
 public class WebhookController {
 
 	private static final String DEFAULT_SPEECH = "Hmm, I don't know what you mean.";
 
+	private static final String ALEXA = "Alexa";
+	
+	@Autowired
+	private WikipediaHelper wikiHelper;
+	
 	@RequestMapping(value = "/webhook", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
 	public AIResponseObject webhook(@RequestBody AIGenericRequest request, HttpServletResponse response) {
 		AIResponseObject respObj = new AIResponseObject();
@@ -45,8 +55,10 @@ public class WebhookController {
 		String response = "Sorry, I actually don't know much about " + device + ".";
 				
 		switch (device) {
-		case DeviceConstants.ALEXA:
-			response = "Alexa is Amazon's smart home device.";
+		case ALEXA:
+			List<String> facts = wikiHelper.requestFacts(DeviceConstants.AMAZON_ALEXA.getWikiArticle());
+			Integer randomNumber = new Random().nextInt(facts.size());
+			response = facts.get(randomNumber);
 		}
 		
 		return response;
