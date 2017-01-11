@@ -38,20 +38,37 @@ public class WikipediaHelper {
 		return generateFactsList(getArticleIntro(response.getBody().getQuery().getPages()), subject);
 	}
 	
-	public List<String> generateFactsList(String articleIntro, String subject) {
+	private List<String> generateFactsList(String articleIntro, String subject) {
 		List<String> facts = new ArrayList<String>();
 		
-		String deviceUpper = DeviceConstants.valueOf(subject.toUpperCase()).getName() + " ";
-		String deviceLower = deviceUpper.toLowerCase() + " ";
+		String deviceName  = DeviceConstants.valueOf(subject.toUpperCase()).getName();
 		
-		for (String fact : articleIntro.split("\\. ")) {
-			facts.add(fact.replaceAll("(</*p>|</*b>)", "").replaceAll("It('s)* ", deviceUpper).replaceAll("it('s)* ", deviceLower));
+		for (String fact : articleIntro.split("(\\. |! )")) {
+			facts.add(formatFact(deviceName, fact));
 		}
 		
 		return facts;
 	}
+
+	private String formatFact(String deviceName, String fact) {
+		
+		String htmlRegex = "(</*b>|</*i>|</*p>)";
+		String pronounRegex = "(?i)(It |They )";
+		String pronounPossessiveRegex = "(?i)(It's )";
+		
+		String formattedFact = fact;
+		formattedFact = formattedFact.replaceAll(htmlRegex, "");
+		formattedFact = formattedFact.replaceAll(pronounRegex, deviceName + " ");
+		formattedFact = formattedFact.replaceAll(pronounPossessiveRegex, deviceName + "'s ");
+		
+		return formattedFact;
+	}
 	
-	public String getArticleIntro(Map<String, Object> requestMap) {
+	/**
+	 * Wikipedia API payload contains a KV pair of "articleId" to article metadata.
+	 * Returns the "extract" metadata for the first article in the requestMap.
+	 */
+	private String getArticleIntro(Map<String, Object> requestMap) {
 		Object[] articleIDs = requestMap.keySet().toArray();
 		Map<String, Object> metadataMap = ((Map)requestMap.get(articleIDs[0]));
 		return metadataMap.get("extract").toString();
