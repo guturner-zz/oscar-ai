@@ -63,6 +63,7 @@ public class WikipediaHelper {
 		formattedFact = formattedFact.replaceAll(htmlRegex, "");
 		formattedFact = formattedFact.replaceAll(pronounRegex, deviceName + " ");
 		formattedFact = formattedFact.replaceAll(pronounPossessiveRegex, deviceName + "'s ");
+		formattedFact = formattedFact.replaceAll("(?i)( are )", " is ");
 		
 		if (!formattedFact.endsWith(".")) {
 			formattedFact += ".";
