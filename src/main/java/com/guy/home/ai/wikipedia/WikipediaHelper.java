@@ -59,7 +59,7 @@ public class WikipediaHelper {
 		String pronounRegex = "(?i)(It |They )";
 		String pronounPossessiveRegex = "(?i)(It's )";
 		
-		String formattedFact = fact;
+		String formattedFact = fact.trim();
 		formattedFact = formattedFact.replaceAll(htmlRegex, "");
 		formattedFact = formattedFact.replaceAll(pronounRegex, deviceName + " ");
 		formattedFact = formattedFact.replaceAll(pronounPossessiveRegex, deviceName + "'s ");
