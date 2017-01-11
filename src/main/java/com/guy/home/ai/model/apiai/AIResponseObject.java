@@ -1,5 +1,7 @@
 package com.guy.home.ai.model.apiai;
 
+import org.springframework.stereotype.Component;
+
 public class AIResponseObject {
 	private String speech;
 	private String displayText;

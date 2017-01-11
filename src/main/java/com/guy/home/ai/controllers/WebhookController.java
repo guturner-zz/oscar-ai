@@ -67,9 +67,11 @@ public class WebhookController {
 		String response = "Sorry, I actually don't know much about " + device + ".";
 
 		String deviceConstant = deviceMap.get(device);
-		List<String> facts = wikiHelper.requestFacts(DeviceConstants.valueOf(deviceConstant).getWikiArticle());
-		Integer randomNumber = new Random().nextInt(facts.size());
-		response = facts.get(randomNumber);
+		if (deviceMap.containsKey(device)) {
+			List<String> facts = wikiHelper.requestFacts(DeviceConstants.valueOf(deviceConstant).getWikiArticle());
+			Integer randomNumber = new Random().nextInt(facts.size());
+			response = facts.get(randomNumber);
+		}
 
 		return response;
 	}
