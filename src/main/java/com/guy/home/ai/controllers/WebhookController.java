@@ -28,11 +28,13 @@ public class WebhookController {
 	private static final String DEFAULT_SPEECH = "Hmm, I don't know what you mean.";
 
 	private static final String ALEXA = "Alexa";
+	private static final String ECOBEE = "the ecobee3";
 	private static final String HARMONY = "Harmony";
 
 	private Map<String, String> deviceMap = new HashMap<String, String>() {
 		{
 			put(ALEXA, "AMAZON_ALEXA");
+			put(ECOBEE, "ECOBEE");
 			put(HARMONY, "LOGITECH_HARMONY");
 		}
 	};
