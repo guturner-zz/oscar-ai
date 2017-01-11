@@ -61,12 +61,12 @@ public class WikipediaHelperTest {
 		WikipediaHelper wikiHelper = new WikipediaHelper();
 
 		String subject = "Amazon_Alexa";
-		String intro = "Alexa is software. It is smart. The program works, it's great!";
+		String intro = "Alexa is software. It is smart. The program works, it's great.";
 		
 		List<String> facts = Whitebox.invokeMethod(wikiHelper, "generateFactsList", intro, subject);
 		
-		assertTrue(facts.contains("Alexa is software"));
-		assertTrue(facts.contains("Alexa is smart"));
-		assertTrue(facts.contains("The program works, Alexa's great!"));
+		assertTrue(facts.contains("Alexa is software."));
+		assertTrue(facts.contains("Alexa is smart."));
+		assertTrue(facts.contains("The program works, Alexa's great."));
 	}
 }

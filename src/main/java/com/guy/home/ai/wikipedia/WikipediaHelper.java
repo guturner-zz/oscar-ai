@@ -43,7 +43,10 @@ public class WikipediaHelper {
 		
 		String deviceName  = DeviceConstants.valueOf(subject.toUpperCase()).getName();
 		
-		for (String fact : articleIntro.split("(\\. |! )")) {
+		for (String fact : articleIntro.split("\\. ")) {
+			if (fact.length() > 150) {
+				continue;
+			}
 			facts.add(formatFact(deviceName, fact));
 		}
 		
@@ -60,6 +63,10 @@ public class WikipediaHelper {
 		formattedFact = formattedFact.replaceAll(htmlRegex, "");
 		formattedFact = formattedFact.replaceAll(pronounRegex, deviceName + " ");
 		formattedFact = formattedFact.replaceAll(pronounPossessiveRegex, deviceName + "'s ");
+		
+		if (!formattedFact.endsWith(".")) {
+			formattedFact += ".";
+		}
 		
 		return formattedFact;
 	}
